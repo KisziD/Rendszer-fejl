@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
 
 namespace Backend.Controllers
@@ -9,7 +9,7 @@ namespace Backend.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        "Fagyos", "Hideg", "Hüvös", "Enyhe", "Meleg", "Forró", "Égető"
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
