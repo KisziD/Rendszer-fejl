@@ -14,8 +14,8 @@ namespace Backend.Contexts
         public DbSet<Specialist> Specialists { get; set; } = null!;
         public DbSet<Device> Devices { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<Maintenance> maintenances { get; set; } = null!;
-        public DbSet<Models.Task> tasks { get; set; } = null!;
-        public DbSet<Statechange> statechanges { get; set; } = null!;
+        public DbSet<Maintenance> Maintenances { get; set; } = null!;
+        public DbSet<Models.Task> Tasks { get; set; } = null!;
+        public DbSet<Statechange> Statechanges { get; set; } = null!;
     }
 }

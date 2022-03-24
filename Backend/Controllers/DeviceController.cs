@@ -2,51 +2,65 @@
 using Backend.Contexts;
 using Backend.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class DeviceController : ControllerBase
     {
+
         private readonly DatabaseContext context;
-        
-        public DeviceController(DatabaseContext _cont) {
-            context = _cont; 
+
+        public DeviceController(DatabaseContext cont)
+        {
+            context = cont;
         }
-        
-        
-        // GET: api/<DeviceController>
+
         [HttpGet]
-        public IEnumerable<Device> Get()
+        public IEnumerable<Device> get()
         {
             return context.Devices;
         }
 
-        // GET api/<DeviceController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("names")]
+        public IEnumerable<string> names()
         {
-            return "value";
+            List<string> names = new List<string>();
+            foreach (var device in context.Devices)
+            {
+                names.Add(device.Name);
+            }
+            return names;
         }
 
-        // POST api/<DeviceController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("names/{id}")]
+        public string name(int id)
         {
+            return context.Devices.Where(s => s.ID == id).FirstOrDefault()?.Name;
         }
 
-        // PUT api/<DeviceController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("all/{id}")]
+        public Device? getById(int id)
         {
+            return context.Devices.Where(s => s.ID == id).FirstOrDefault();
         }
 
-        // DELETE api/<DeviceController>/5
+        [HttpPost("add")]
+        public int post([FromBody] Device devices)
+        {
+            context.Devices.Add(devices);
+            context.SaveChanges();
+            return 0;
+        }
+
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public int delete(int id)
         {
+            context.Devices.Remove(context.Devices.Where(s => s.ID == id).First());
+            context.SaveChanges();
+            return 0;
         }
+
     }
+
 }
