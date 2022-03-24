@@ -7,48 +7,49 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpecialistController : ControllerBase
+    public class CategoryController : ControllerBase
     {
 
         private readonly DatabaseContext context;
 
-        public SpecialistController(DatabaseContext cont)
+        public CategoryController(DatabaseContext cont)
         {
             context = cont;
         }
 
         [HttpGet]
-        public IEnumerable<Specialist> get()
+        public IEnumerable<Category> get()
         {
-            return context.Specialists;
+            return context.Categories;
         }
 
         [HttpGet("names")]
         public IEnumerable<string> names()
         {
-            List<string> names = new List<string>();
-            foreach(var specialist in context.Specialists)
+            List<string> categories = new List<string>();
+            foreach (var category in context.Categories)
             {
-                names.Add(specialist.Name);
+                categories.Add(category.Name);
             }
-            return names;
+            return categories;
         }
 
         [HttpGet("names/{id}")]
         public string? name(int id)
         {
-            return context.Specialists.Where(s => s.ID == id).FirstOrDefault()?.Name;
+            return context.Categories.Where(s => s.ID == id).FirstOrDefault()?.Name;
         }
 
         [HttpGet("all/{id}")]
-        public Specialist? getById(int id) { 
-            return context.Specialists.Where(s => s.ID == id).FirstOrDefault(); 
+        public Category? getById(int id)
+        {
+            return context.Categories.Where(s => s.ID == id).FirstOrDefault();
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Specialist specialist)
+        public int post([FromBody] Category category)
         {
-            context.Specialists.Add(specialist);
+            context.Categories.Add(category);
             context.SaveChanges();
             return 0;
         }
@@ -56,7 +57,7 @@ namespace Backend.Controllers
         [HttpDelete("{id}")]
         public int delete(int id)
         {
-            context.Specialists.Remove(context.Specialists.Where(s => s.ID == id).First());
+            context.Categories.Remove(context.Categories.Where(s => s.ID == id).First());
             context.SaveChanges();
             return 0;
         }
