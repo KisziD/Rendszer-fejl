@@ -11,5 +11,7 @@ namespace Backend.Contexts
         }
 
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Specialist> Specialists { get; set; } = null!;
+        public DbSet<Device> Devices { get; set; } = null!;
     }
 }

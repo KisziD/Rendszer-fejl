@@ -8,8 +8,23 @@ namespace Backend.Models
     public class User
     {
         [Key]
-        public int userID { get; set; }
-        public string username { get; set; }
+        public int ID { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
+        public string Role { get; set; }
+        public int Token { get; set; }
+    }
+
+    public class LoginObject
+    {
+        public int ID { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class TokenObject
+    {
+        public int ID { get; set; }
+        public int Token { get; set; }
     }
 }

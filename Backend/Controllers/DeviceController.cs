@@ -8,41 +8,42 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class DeviceController : ControllerBase
     {
         private readonly DatabaseContext context;
-
-        public UserController(DatabaseContext cont)
-        {
-            context = cont;
+        
+        public DeviceController(DatabaseContext _cont) {
+            context = _cont; 
         }
-        // GET: api/<ValuesController>
+        
+        
+        // GET: api/<DeviceController>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<Device> Get()
         {
-            return context.Users.ToArray();
+            return context.Devices;
         }
 
-        // GET api/<ValuesController>/5
+        // GET api/<DeviceController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<ValuesController>
+        // POST api/<DeviceController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<ValuesController>/5
+        // PUT api/<DeviceController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ValuesController>/5
+        // DELETE api/<DeviceController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
