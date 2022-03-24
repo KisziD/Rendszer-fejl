@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace Backend.Models
 {
     [Table("Specialist")]
@@ -11,5 +10,6 @@ namespace Backend.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Qualification { get; set; }
+        public string UserID { get; set; }
     }
 }
