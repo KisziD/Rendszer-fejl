@@ -36,7 +36,7 @@ namespace Backend.Controllers
         [HttpGet("names/{id}")]
         public string name(int id)
         {
-            return context.Devices.Where(s => s.ID == id).FirstOrDefault()?.Name;
+            return "{\"name\":\"" + context.Devices.Where(s => s.ID == id).FirstOrDefault()?.Name + "\"}";
         }
 
         [HttpGet("all/{id}")]
@@ -46,19 +46,19 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Device devices)
+        public string post([FromBody] Device devices)
         {
             context.Devices.Add(devices);
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
         [HttpDelete("{id}")]
-        public int delete(int id)
+        public string delete(int id)
         {
             context.Devices.Remove(context.Devices.Where(s => s.ID == id).First());
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
     }

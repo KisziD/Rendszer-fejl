@@ -37,7 +37,7 @@ namespace Backend.Controllers
         [HttpGet("names/{id}")]
         public string? name(int id)
         {
-            return context.Specialists.Where(s => s.ID == id).FirstOrDefault()?.Name;
+            return "{\"name\":\""+ context.Specialists.Where(s => s.ID == id).FirstOrDefault()?.Name+"\"}";
         }
 
         [HttpGet("all/{id}")]
@@ -46,19 +46,19 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Specialist specialist)
+        public string post([FromBody] Specialist specialist)
         {
             context.Specialists.Add(specialist);
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
         [HttpDelete("{id}")]
-        public int delete(int id)
+        public string delete(int id)
         {
             context.Specialists.Remove(context.Specialists.Where(s => s.ID == id).First());
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
     }

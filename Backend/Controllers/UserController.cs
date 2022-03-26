@@ -32,21 +32,21 @@ namespace Backend.Controllers
         }
 
         [HttpPost("token")]
-        public int getToken([FromBody]TokenObject token)
+        public string getToken([FromBody]TokenObject token)
         {
             User user = (User)context.Users.Where(u => u.ID == token.ID).FirstOrDefault();
             if (token.Token == user.Token)
             {
-                return 1;
+                return "{\"response\":1}";
             }
             else
             {
-                return 0;
+                return "{\"response\":0}";
             }
         }
 
         [HttpPost("login")]
-        public int login([FromBody]LoginObject login)
+        public string login([FromBody]LoginObject login)
         {
             User user = (User)context.Users.Where(u => u.ID == login.ID).FirstOrDefault();
             if (user.Password == login.Password)
@@ -54,11 +54,11 @@ namespace Backend.Controllers
                 int token = generateToken();
                 user.Token = token;
                 context.SaveChanges();
-                return token;
+                return "{\"token\":" + token + "}";
             }
             else
             {
-                return 0;
+                return "{\"response\":0}";
             }
         }
 

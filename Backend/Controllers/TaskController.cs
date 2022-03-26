@@ -23,19 +23,19 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Models.Task tasks)
+        public string post([FromBody] Models.Task tasks)
         {
             context.Tasks.Add(tasks);
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
         [HttpDelete("{id}")]
-        public int delete(int id)
+        public string delete(int id)
         {
             context.Tasks.Remove(context.Tasks.Where(s => s.ID == id).First());
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
     }

@@ -30,19 +30,19 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Statechange statechange)
+        public string post([FromBody] Statechange statechange)
         {
             context.Statechanges.Add(statechange);
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
         [HttpDelete("{id}")]
-        public int delete(int id)
+        public string delete(int id)
         {
             context.Statechanges.Remove(context.Statechanges.Where(s => s.ID == id).First());
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
     }

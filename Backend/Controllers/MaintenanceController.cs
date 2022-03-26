@@ -26,7 +26,7 @@ namespace Backend.Controllers
         [HttpGet("instructions/{id}")]
         public string? instruction(int id)
         {
-            return context.Maintenances.Where(s => s.ID == id).FirstOrDefault()?.Instructions;
+            return "{\"instructions\":\"" +context.Maintenances.Where(s => s.ID == id).FirstOrDefault()?.Instructions + "\"}";
         }
 
         [HttpGet("all/{id}")]
@@ -36,19 +36,19 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public int post([FromBody] Maintenance maintenance)
+        public string post([FromBody] Maintenance maintenance)
         {
             context.Maintenances.Add(maintenance);
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
         [HttpDelete("{id}")]
-        public int delete(int id)
+        public string delete(int id)
         {
             context.Maintenances.Remove(context.Maintenances.Where(s => s.ID == id).First());
             context.SaveChanges();
-            return 0;
+            return "{\"response\":0}";
         }
 
     }
