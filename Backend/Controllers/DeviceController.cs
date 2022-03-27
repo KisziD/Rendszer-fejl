@@ -76,7 +76,8 @@ namespace Backend.Controllers
             }
             else
             {
-                context.Devices.Where(d => d.ID == device.ID).FirstOrDefault().CategoryID = category.ID;
+                dev.CategoryID = category.ID;
+                context.Devices.Add(dev);
                 context.SaveChanges();
                 return "{\"response\":1}";
             }

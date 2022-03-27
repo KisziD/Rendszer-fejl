@@ -53,6 +53,7 @@ namespace Backend.Controllers
             cat.ID = category.ID;
             cat.Name = category.Name;
             cat.Norm_h = category.Norm_h;
+            if(category.Parent != "No parent")
             cat.Parent = context.Categories.Where(c => c.Name == category.Parent).FirstOrDefault().ID;
             context.Categories.Add(cat);
             context.SaveChanges();
