@@ -35,7 +35,7 @@ namespace Backend.Controllers
         public string getToken([FromBody]TokenObject token)
         {
             User user = (User)context.Users.Where(u => u.ID == token.ID).FirstOrDefault();
-            if (token.Token == user.Token)
+            if ((user!=null)&&token.Token == user.Token)
             {
                 return "{\"response\":1}";
             }
