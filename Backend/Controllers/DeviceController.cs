@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc; 
 using Backend.Contexts;
 using Backend.Models;
 
@@ -17,9 +17,25 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Device> get()
+        public IEnumerable<NewDevice> get()
         {
-            return context.Devices;
+            LinkedList<NewDevice> devices = new LinkedList<NewDevice>();
+            Dictionary<int, string> categories = new Dictionary<int, string>();
+            foreach(var category in context.Categories)
+            {
+                categories[category.ID] = category.Name;
+            }
+            foreach(var device in context.Devices)
+            {
+                NewDevice dev = new NewDevice();
+                dev.Name = device.Name;
+                dev.ID = device.ID;
+                dev.Description = device.Description;
+                dev.Location = device.Location;
+                dev.CategoryName = categories[device.CategoryID];
+                devices.AddLast(dev);
+            }
+            return devices;
         }
 
         [HttpGet("names")]
@@ -46,11 +62,24 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Device devices)
+        public string post([FromBody] NewDevice device)
         {
-            context.Devices.Add(devices);
-            context.SaveChanges();
-            return "{\"response\":0}";
+            Device dev = new Device();
+            dev.ID = device.ID;
+            dev.Name = device.Name;
+            dev.Description = device.Description;
+            dev.Location = device.Location;
+            Category category = context.Categories.Where(c => c.Name == device.CategoryName).FirstOrDefault();
+            if (category == null)
+            {
+                return "{\"response\":0}";
+            }
+            else
+            {
+                context.Devices.Where(d => d.ID == device.ID).FirstOrDefault().CategoryID = category.ID;
+                context.SaveChanges();
+                return "{\"response\":1}";
+            }
         }
 
         [HttpPost("assigncategory")]

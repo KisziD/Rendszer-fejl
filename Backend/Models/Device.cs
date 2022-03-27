@@ -19,4 +19,13 @@ namespace Backend.Models
         public int deviceID { get; set; }
         public string categoryName { get; set; }
     }
+
+    public class NewDevice
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string CategoryName{ get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }
+    }
 }

@@ -21,4 +21,12 @@ namespace Backend.Models
         }
         public string Name { get; set; }
     }
+
+    public class NewCategory
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public double Norm_h { get; set; }
+        public string? Parent { get; set; }
+    }
 }

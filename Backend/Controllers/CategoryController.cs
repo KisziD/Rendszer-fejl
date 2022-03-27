@@ -47,9 +47,14 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Category category)
+        public string post([FromBody] NewCategory category)
         {
-            context.Categories.Add(category);
+            Category cat = new Category();
+            cat.ID = category.ID;
+            cat.Name = category.Name;
+            cat.Norm_h = category.Norm_h;
+            cat.Parent = context.Categories.Where(c => c.Name == category.Parent).FirstOrDefault().ID;
+            context.Categories.Add(cat);
             context.SaveChanges();
             return "{\"response\":0}";
         }
