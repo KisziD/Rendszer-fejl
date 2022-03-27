@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.
+using Microsoft.AspNetCore.Mvc;
 using Backend.Contexts;
 using Backend.Models;
 
