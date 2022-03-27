@@ -56,9 +56,16 @@ namespace Backend.Controllers
         }
 
         [HttpGet("all/{id}")]
-        public Device? getById(int id)
+        public NewDevice? getById(int id)
         {
-            return context.Devices.Where(s => s.ID == id).FirstOrDefault();
+            Device device = context.Devices.Where(d => d.ID == id).FirstOrDefault();
+            NewDevice dev = new NewDevice();
+            dev.ID = device.ID;
+            dev.Name= device.Name;
+            dev.Description= device.Description;
+            dev.Location= device.Location;
+            dev.CategoryName = context.Categories.Where(c => c.ID == device.CategoryID).FirstOrDefault().Name;
+            return dev;
         }
 
         [HttpPost("add")]
