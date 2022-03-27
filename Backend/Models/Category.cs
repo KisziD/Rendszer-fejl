@@ -10,6 +10,15 @@ namespace Backend.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public double Norm_h { get; set; }
-        public int Parent { get; set; }
+        public int? Parent { get; set; }
+    }
+
+    public class CategoryName
+    {
+        public CategoryName(string _name)
+        {
+            Name = _name;
+        }
+        public string Name { get; set; }
     }
 }

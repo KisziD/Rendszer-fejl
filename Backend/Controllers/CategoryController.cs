@@ -24,12 +24,12 @@ namespace Backend.Controllers
         }
 
         [HttpGet("names")]
-        public IEnumerable<string> names()
+        public IEnumerable<CategoryName> names()
         {
-            List<string> categories = new List<string>();
+            List<CategoryName> categories = new List<CategoryName>();
             foreach (var category in context.Categories)
             {
-                categories.Add(category.Name);
+                categories.Add(new CategoryName(category.Name));
             }
             return categories;
         }

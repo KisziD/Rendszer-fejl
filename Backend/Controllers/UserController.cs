@@ -48,17 +48,17 @@ namespace Backend.Controllers
         [HttpPost("login")]
         public string login([FromBody]LoginObject login)
         {
-            User user = (User)context.Users.Where(u => u.ID == login.ID).FirstOrDefault();
+            User user = (User)context.Users.Where(u => u.Username == login.Username).FirstOrDefault();
             if (user.Password == login.Password)
             {
                 int token = generateToken();
                 user.Token = token;
                 context.SaveChanges();
-                return "{\"token\":" + token + "}";
+                return "{\"id\":"+user.ID+",\"token\":" + token + "}";
             }
             else
             {
-                return "{\"response\":0}";
+                return "{\"id\":-1, \"token\":0}";
             }
         }
 

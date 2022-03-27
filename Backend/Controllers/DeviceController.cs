@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.
 using Backend.Contexts;
 using Backend.Models;
 
@@ -51,6 +52,23 @@ namespace Backend.Controllers
             context.Devices.Add(devices);
             context.SaveChanges();
             return "{\"response\":0}";
+        }
+
+        [HttpPost("assigncategory")]
+        public string assignCategory([FromBody] AssignCategory assignCategory)
+        {
+            Device device = context.Devices.Where(d => d.ID == assignCategory.deviceID).FirstOrDefault();
+            Category category = context.Categories.Where(c => c.Name == assignCategory.categoryName).FirstOrDefault();
+            if(device == null || category == null)
+            {
+                return "{\"response\":0}";
+            }
+            else
+            { 
+                context.Devices.Where(d => d.ID == assignCategory.deviceID).FirstOrDefault().CategoryID = category.ID;
+                context.SaveChanges();
+                return "{\"response\":1}";
+            }
         }
 
         [HttpDelete("{id}")]

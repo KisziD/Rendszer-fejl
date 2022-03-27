@@ -13,4 +13,10 @@ namespace Backend.Models
         public string Location { get; set; }
         public string Description { get; set; }
     }
+
+    public class AssignCategory
+    {
+        public int deviceID { get; set; }
+        public string categoryName { get; set; }
+    }
 }
