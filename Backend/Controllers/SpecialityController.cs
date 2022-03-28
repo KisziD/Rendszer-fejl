@@ -18,9 +18,24 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Speciality> get()
+        public IEnumerable<NewSpeciality> get()
         {
-            return context.Specialities;
+            LinkedList<NewSpeciality> specialities = new LinkedList<NewSpeciality>();
+            Dictionary<int, string> categories = new Dictionary<int, string>();
+            foreach (var category in context.Categories)
+            {
+                categories[category.ID] = category.Name;
+            }
+            foreach (var speciality in context.Specialities)
+            {
+                NewSpeciality spec = new NewSpeciality();
+                spec.Name = speciality.Name;
+                spec.ID = speciality.ID;
+                spec.CategoryName = categories[speciality.CategoryID];
+               
+                specialities.AddLast(spec);
+            }
+            return specialities;
         }
 
         [HttpGet("names")]
@@ -41,17 +56,34 @@ namespace Backend.Controllers
         }
 
         [HttpGet("all/{id}")]
-        public Speciality? getById(int id)
+        public NewSpeciality? getById(int id)
         {
-            return context.Specialities.Where(s => s.ID == id).FirstOrDefault();
+            Speciality speciality = context.Specialities.Where(d => d.ID == id).FirstOrDefault();
+            NewSpeciality spec = new NewSpeciality();
+            spec.ID = speciality.ID;
+            spec.Name = speciality.Name;
+            spec.CategoryName = context.Categories.Where(c => c.ID == speciality.CategoryID).FirstOrDefault().Name;
+            return spec;
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Speciality speciality)
+        public string post([FromBody] NewSpeciality speciality)
         {
-            context.Specialities.Add(speciality);
-            context.SaveChanges();
-            return "{\"response\":0}";
+            Speciality spec = new Speciality();
+            spec.ID = speciality.ID;
+            spec.Name = speciality.Name;
+            Category category = context.Categories.Where(c => c.Name == speciality.CategoryName).FirstOrDefault();
+            if (category == null)
+            {
+                return "{\"response\":0}";
+            }
+            else
+            {
+                spec.CategoryID = category.ID;
+                context.Specialities.Add(spec);
+                context.SaveChanges();
+                return "{\"response\":1}";
+            }
         }
 
         [HttpDelete("{id}")]
