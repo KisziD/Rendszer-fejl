@@ -23,12 +23,6 @@ namespace Backend.Controllers
             return context.Maintenances;
         }
 
-        [HttpGet("instructions/{id}")]
-        public string? instruction(int id)
-        {
-            return "{\"instructions\":\"" +context.Maintenances.Where(s => s.ID == id).FirstOrDefault()?.Instructions + "\"}";
-        }
-
         [HttpGet("all/{id}")]
         public Maintenance? getById(int id)
         {
