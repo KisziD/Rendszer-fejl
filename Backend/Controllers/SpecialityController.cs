@@ -42,7 +42,7 @@ namespace Backend.Controllers
         public IEnumerable<SpecialityName> names()
         {
             List<SpecialityName> specialities = new List<SpecialityName>();
-            foreach (var speciality in context.Categories)
+            foreach (var speciality in context.Specialities)
             {
                 specialities.Add(new SpecialityName(speciality.Name));
             }
