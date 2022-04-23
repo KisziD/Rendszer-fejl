@@ -12,7 +12,7 @@ namespace Backend.Models
         public double Norm_h { get; set; }
         public int? Interval { get; set; }
         public int? Parent { get; set; }
-        public string Instructions { get; set; }
+        public string? Instructions { get; set; }
     }
 
     public class CategoryName
