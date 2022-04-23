@@ -10,7 +10,9 @@ namespace Backend.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public double Norm_h { get; set; }
+        public int? Interval { get; set; }
         public int? Parent { get; set; }
+        public string Instructions { get; set; }
     }
 
     public class CategoryName
@@ -27,6 +29,8 @@ namespace Backend.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public double Norm_h { get; set; }
+        public int? Interval { get; set; }
         public string? Parent { get; set; }
+        public string Instructions { get; set; }
     }
 }

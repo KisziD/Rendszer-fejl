@@ -21,7 +21,5 @@ namespace Backend.Models
         public States State { get; set; }
         public string Justification { get; set; }
         public int Severity { get; set; }
-        public string Instructions { get; set; }
-        public int Interval { get; set; }
     }
 }
