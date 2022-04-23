@@ -18,4 +18,14 @@ namespace Backend.Models
         public string Name { get; set; }
         public string CategoryName { get; set; }
     }
+
+    public class SpecialityName
+    {
+        public SpecialityName(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; set; }
+    }
 }

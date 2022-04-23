@@ -39,14 +39,14 @@ namespace Backend.Controllers
         }
 
         [HttpGet("names")]
-        public IEnumerable<string> names()
+        public IEnumerable<SpecialityName> names()
         {
-            List<string> names = new List<string>();
-            foreach (var specialist in context.Specialities)
+            List<SpecialityName> specialities = new List<SpecialityName>();
+            foreach (var speciality in context.Categories)
             {
-                names.Add(specialist.Name);
+                specialities.Add(new SpecialityName(speciality.Name));
             }
-            return names;
+            return specialities;
         }
 
         [HttpGet("names/{id}")]
