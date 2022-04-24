@@ -35,7 +35,6 @@ namespace Backend.Controllers
             Maintenance main = new Maintenance();
             main.Justification = maintenance.Justification;
             main.DeviceID = context.Devices.Where(d => d.Name == maintenance.Name && d.Location == maintenance.Location).FirstOrDefault().ID;
-            main.State = States.Pending;
             main.Date = DateTime.Now;
             main.Severity = 0;
             context.Maintenances.Add(main);
