@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public enum States
 {
+    NAN,
     Accepted,
     Denied,
     Started,
@@ -19,7 +20,7 @@ namespace Backend.Models
         public int ID { get; set; }
         public DateTime Date { get; set; }
         public int DeviceID { get; set; }
-        public States State { get; set; }
+        public States? State { get; set; }
         public string Justification { get; set; }
         public int Severity { get; set; }
     }
