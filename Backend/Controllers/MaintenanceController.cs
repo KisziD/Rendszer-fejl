@@ -18,9 +18,25 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Maintenance> get()
+        public IEnumerable<MaintenanceView> get()
         {
-            return context.Maintenances;
+            LinkedList<MaintenanceView> maintenanceViews = new LinkedList<MaintenanceView>();
+           LinkedList<Maintenance> maintenance = new LinkedList<Maintenance>();
+            foreach(var m in context.Maintenances)
+            {
+                maintenance.AddLast(m);
+            }
+            foreach(var m in maintenance)
+            {
+                Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+                MaintenanceView mv = new MaintenanceView();
+                mv.Date = m.Date.ToString().Split(" ")[0];
+                mv.State = m.State.ToString();
+                mv.Device = d.Name + ": " + d.Location;
+                maintenanceViews.AddLast(mv);
+            }
+
+            return maintenanceViews;
         }
 
         [HttpGet("all/{id}")]

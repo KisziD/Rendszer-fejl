@@ -31,4 +31,11 @@ namespace Backend.Models
         public string Location { get; set; }
         public string Justification { get; set; }
     }
+
+    public class MaintenanceView
+    {
+        public string Device { get; set; }
+        public string Date { get; set; }
+        public string State { get; set; }
+    }
 }
