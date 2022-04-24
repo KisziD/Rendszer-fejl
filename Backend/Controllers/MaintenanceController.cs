@@ -30,6 +30,7 @@ namespace Backend.Controllers
             {
                 Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
                 MaintenanceView mv = new MaintenanceView();
+                mv.ID = m.ID;
                 mv.Date = m.Date.ToString().Split(" ")[0];
                 mv.State = m.State.ToString();
                 mv.Device = d.Name + ": " + d.Location;
@@ -40,9 +41,17 @@ namespace Backend.Controllers
         }
 
         [HttpGet("all/{id}")]
-        public Maintenance? getById(int id)
+        public MaintenanceView? getById(int id)
         {
-            return context.Maintenances.Where(s => s.ID == id).FirstOrDefault();
+
+            Maintenance m = context.Maintenances.FirstOrDefault(m => m.ID == id);
+            Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+            MaintenanceView mv = new MaintenanceView();
+            mv.ID = m.ID;
+            mv.Date = m.Date.ToString().Split(" ")[0];
+            mv.State = m.State.ToString();
+            mv.Device = d.Name + ": " + d.Location;
+            return mv;
         }
 
         [HttpPost("add")]

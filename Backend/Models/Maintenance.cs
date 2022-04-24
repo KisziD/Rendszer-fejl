@@ -34,6 +34,7 @@ namespace Backend.Models
 
     public class MaintenanceView
     {
+        public int ID { get; set; }
         public string Device { get; set; }
         public string Date { get; set; }
         public string State { get; set; }
