@@ -6,7 +6,8 @@ public enum States
     Accepted,
     Denied,
     Started,
-    Done
+    Done,
+    Pending
 }
 
 namespace Backend.Models
@@ -17,9 +18,16 @@ namespace Backend.Models
         [Key]
         public int ID { get; set; }
         public DateTime Date { get; set; }
-        public double Norm_h { get; set; }
+        public int DeviceID { get; set; }
         public States State { get; set; }
         public string Justification { get; set; }
         public int Severity { get; set; }
+    }
+
+    public class NewMaintenance
+    {
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public string Justification { get; set; }
     }
 }

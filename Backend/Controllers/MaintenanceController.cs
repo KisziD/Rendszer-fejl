@@ -30,9 +30,15 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Maintenance maintenance)
+        public string post([FromBody] NewMaintenance maintenance)
         {
-            context.Maintenances.Add(maintenance);
+            Maintenance main = new Maintenance();
+            main.Justification = maintenance.Justification;
+            main.DeviceID = context.Devices.Where(d => d.Name == maintenance.Name && d.Location == maintenance.Location).FirstOrDefault().ID;
+            main.State = States.Pending;
+            main.Date = DateTime.Now;
+            main.Severity = 0;
+            context.Maintenances.Add(main);
             context.SaveChanges();
             return "{\"response\":0}";
         }
