@@ -46,9 +46,25 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Specialist specialist)
+        public string post([FromBody] NewSpecialist specialist)
         {
-            context.Specialists.Add(specialist);
+
+            User newUser = new User();
+
+            newUser.Username = specialist.Username;
+            newUser.Password = specialist.Password;
+            newUser.Role = specialist.Role;
+
+            context.Users.Add(newUser);
+            context.SaveChanges();
+
+            Specialist newSpecialist = new Specialist();
+
+            newSpecialist.Name = specialist.Name;
+            newSpecialist.Qualification = context.Specialities.Where(s => s.Name == specialist.SpecialityName).FirstOrDefault()?.ID;
+            newSpecialist.UserID = context.Users.Where(u => u.Username == specialist.Username).FirstOrDefault().ID;
+
+            context.Specialists.Add(newSpecialist);
             context.SaveChanges();
             return "{\"response\":0}";
         }

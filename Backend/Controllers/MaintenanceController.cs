@@ -18,27 +18,52 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Maintenance> get()
+        public IEnumerable<MaintenanceView> get()
         {
-            return context.Maintenances;
-        }
+            LinkedList<MaintenanceView> maintenanceViews = new LinkedList<MaintenanceView>();
+           LinkedList<Maintenance> maintenance = new LinkedList<Maintenance>();
+            foreach(var m in context.Maintenances)
+            {
+                maintenance.AddLast(m);
+            }
+            foreach(var m in maintenance)
+            {
+                Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+                MaintenanceView mv = new MaintenanceView();
+                mv.ID = m.ID;
+                mv.Date = m.Date.ToString().Split(" ")[0];
+                mv.State = m.State.ToString();
+                mv.Device = d.Name + ": " + d.Location;
+                maintenanceViews.AddLast(mv);
+            }
 
-        [HttpGet("instructions/{id}")]
-        public string? instruction(int id)
-        {
-            return "{\"instructions\":\"" +context.Maintenances.Where(s => s.ID == id).FirstOrDefault()?.Instructions + "\"}";
+            return maintenanceViews;
         }
 
         [HttpGet("all/{id}")]
-        public Maintenance? getById(int id)
+        public MaintenanceView? getById(int id)
         {
-            return context.Maintenances.Where(s => s.ID == id).FirstOrDefault();
+
+            Maintenance m = context.Maintenances.FirstOrDefault(m => m.ID == id);
+            Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+            MaintenanceView mv = new MaintenanceView();
+            mv.ID = m.ID;
+            mv.Date = m.Date.ToString().Split(" ")[0];
+            mv.State = m.State.ToString();
+            mv.Device = d.Name + ": " + d.Location;
+            return mv;
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Maintenance maintenance)
+        public string post([FromBody] NewMaintenance maintenance)
         {
-            context.Maintenances.Add(maintenance);
+            Maintenance main = new Maintenance();
+            main.Justification = maintenance.Justification;
+            main.DeviceID = context.Devices.Where(d => d.Name == maintenance.Name && d.Location == maintenance.Location).FirstOrDefault().ID;
+            main.Date = DateTime.Now;
+            main.State = States.Pending;
+            main.Severity = 0;
+            context.Maintenances.Add(main);
             context.SaveChanges();
             return "{\"response\":0}";
         }

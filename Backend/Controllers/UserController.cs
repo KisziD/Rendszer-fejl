@@ -49,7 +49,7 @@ namespace Backend.Controllers
         public string login([FromBody]LoginObject login)
         {
             User user = (User)context.Users.Where(u => u.Username == login.Username).FirstOrDefault();
-            if ((user!=null)user.Password == login.Password)
+            if ((user!=null)&&user.Password == login.Password)
             {
                 int token = generateToken();
                 user.Token = token;

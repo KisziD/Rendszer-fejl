@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc; 
 using Backend.Contexts;
 using Backend.Models;
 
@@ -17,9 +17,25 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Device> get()
+        public IEnumerable<NewDevice> get()
         {
-            return context.Devices;
+            LinkedList<NewDevice> devices = new LinkedList<NewDevice>();
+            Dictionary<int, string> categories = new Dictionary<int, string>();
+            foreach(var category in context.Categories)
+            {
+                categories[category.ID] = category.Name;
+            }
+            foreach(var device in context.Devices)
+            {
+                NewDevice dev = new NewDevice();
+                dev.Name = device.Name;
+                dev.ID = device.ID;
+                dev.Description = device.Description;
+                dev.Location = device.Location;
+                dev.CategoryName = categories[device.CategoryID];
+                devices.AddLast(dev);
+            }
+            return devices;
         }
 
         [HttpGet("names")]
@@ -40,17 +56,38 @@ namespace Backend.Controllers
         }
 
         [HttpGet("all/{id}")]
-        public Device? getById(int id)
+        public NewDevice? getById(int id)
         {
-            return context.Devices.Where(s => s.ID == id).FirstOrDefault();
+            Device device = context.Devices.Where(d => d.ID == id).FirstOrDefault();
+            NewDevice dev = new NewDevice();
+            dev.ID = device.ID;
+            dev.Name= device.Name;
+            dev.Description= device.Description;
+            dev.Location= device.Location;
+            dev.CategoryName = context.Categories.Where(c => c.ID == device.CategoryID).FirstOrDefault().Name;
+            return dev;
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Device devices)
+        public string post([FromBody] NewDevice device)
         {
-            context.Devices.Add(devices);
-            context.SaveChanges();
-            return "{\"response\":0}";
+            Device dev = new Device();
+            dev.ID = device.ID;
+            dev.Name = device.Name;
+            dev.Description = device.Description;
+            dev.Location = device.Location;
+            Category category = context.Categories.Where(c => c.Name == device.CategoryName).FirstOrDefault();
+            if (category == null)
+            {
+                return "{\"response\":0}";
+            }
+            else
+            {
+                dev.CategoryID = category.ID;
+                context.Devices.Add(dev);
+                context.SaveChanges();
+                return "{\"response\":1}";
+            }
         }
 
         [HttpPost("assigncategory")]

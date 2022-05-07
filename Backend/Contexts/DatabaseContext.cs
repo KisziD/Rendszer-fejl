@@ -17,5 +17,6 @@ namespace Backend.Contexts
         public DbSet<Maintenance> Maintenances { get; set; } = null!;
         public DbSet<Models.Task> Tasks { get; set; } = null!;
         public DbSet<Statechange> Statechanges { get; set; } = null!;
+        public DbSet<Speciality> Specialities { get; set; } = null!;
     }
 }

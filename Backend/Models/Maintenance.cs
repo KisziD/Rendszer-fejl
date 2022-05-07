@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public enum States
 {
+    NAN,
     Accepted,
     Denied,
     Started,
-    Done
+    Done,
+    Pending
 }
 
 namespace Backend.Models
@@ -17,11 +19,24 @@ namespace Backend.Models
         [Key]
         public int ID { get; set; }
         public DateTime Date { get; set; }
-        public double Norm_h { get; set; }
-        public States State { get; set; }
+        public int DeviceID { get; set; }
+        public States? State { get; set; }
         public string Justification { get; set; }
         public int Severity { get; set; }
-        public string Instructions { get; set; }
-        public int Interval { get; set; }
+    }
+
+    public class NewMaintenance
+    {
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public string Justification { get; set; }
+    }
+
+    public class MaintenanceView
+    {
+        public int ID { get; set; }
+        public string Device { get; set; }
+        public string Date { get; set; }
+        public string State { get; set; }
     }
 }
