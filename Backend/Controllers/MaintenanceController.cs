@@ -46,12 +46,33 @@ namespace Backend.Controllers
 
             Maintenance m = context.Maintenances.FirstOrDefault(m => m.ID == id);
             Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+            Category c = context.Categories.Where(c => c.ID == d.CategoryID).FirstOrDefault();
             MaintenanceView mv = new MaintenanceView();
             mv.ID = m.ID;
             mv.Date = m.Date.ToString().Split(" ")[0];
             mv.State = m.State.ToString();
             mv.Device = d.Name + ": " + d.Location;
+            mv.Instructions = c.Instructions;
             return mv;
+        }
+
+        [HttpPost("state")]
+        public string setState([FromBody] setMaintenanceState newState)
+        {
+            context.Maintenances.Where(m => m.ID == newState.ID).FirstOrDefault().State = newState.State;
+            if(newState.State == States.Denied)
+            {
+                context.Maintenances.Where(m => m.ID == newState.ID).FirstOrDefault().CancelReason = newState.Reason;
+            }
+            context.Statechanges.Add(new Statechange()
+            {
+                Date = DateTime.Now,
+                MaintenanceID = newState.ID,
+                SpecialistID = newState.SpecialistID,
+                State = newState.State
+            });
+            context.SaveChanges();
+            return "{\"response\":0}";
         }
 
         [HttpPost("add")]

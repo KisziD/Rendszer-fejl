@@ -22,6 +22,7 @@ namespace Backend.Models
         public int DeviceID { get; set; }
         public States? State { get; set; }
         public string Justification { get; set; }
+        public string? CancelReason { get; set; }
         public int Severity { get; set; }
     }
 
@@ -38,5 +39,15 @@ namespace Backend.Models
         public string Device { get; set; }
         public string Date { get; set; }
         public string State { get; set; }
+        public string CancelReason { get; set; }
+        public string Instructions { get; set; }
+    }
+
+    public class setMaintenanceState
+    {
+        public int ID { get; set; }
+        public int SpecialistID { get; set; }
+        public States State { get; set; }
+        public string? Reason { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace Backend.Controllers
                 int token = generateToken();
                 user.Token = token;
                 context.SaveChanges();
-                return "{\"id\":"+user.ID+",\"token\":" + token + "}";
+                return "{\"id\":"+user.ID+",\"token\":" + token + ":"+user.Role+ "}";
             }
             else
             {

@@ -21,4 +21,10 @@ namespace Backend.Models
         public string Role { get; set; }
         public string SpecialityName { get; set; }
     }
+
+    public class EligibleSpecialist
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
 }

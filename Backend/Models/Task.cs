@@ -11,4 +11,6 @@ namespace Backend.Models
         public int MaintenanceID { get; set; }
         public int SpecialistID { get; set; }
     }
+
+
 }

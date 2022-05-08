@@ -45,6 +45,29 @@ namespace Backend.Controllers
             return context.Specialists.Where(s => s.ID == id).FirstOrDefault(); 
         }
 
+        [HttpGet("tasks/{id}")]
+        public IEnumerable<MaintenanceView> getTasks(int id)
+        {
+            List<MaintenanceView> tasks = new List<MaintenanceView>();
+            var query = context.Tasks.Where(t => t.SpecialistID == id).ToArray();
+            foreach(var item in query)
+            {
+
+                Maintenance m = context.Maintenances.FirstOrDefault(m => m.ID == item.MaintenanceID);
+                Device d = context.Devices.Where(d => d.ID == m.DeviceID).FirstOrDefault();
+                Category c = context.Categories.Where(c => c.ID == d.CategoryID).FirstOrDefault();
+                tasks.Add(new MaintenanceView()
+                {
+                    ID = m.ID,
+                    Date = m.Date.ToString().Split(" ")[0],
+                    State = m.State.ToString(),
+                    Device = d.Name + ": " + d.Location,
+                    Instructions = c.Instructions,
+                });
+            }
+            return tasks;
+        }
+
         [HttpPost("add")]
         public string post([FromBody] NewSpecialist specialist)
         {
