@@ -64,6 +64,7 @@ namespace Backend.Controllers
             {
                 context.Maintenances.Where(m => m.ID == newState.ID).FirstOrDefault().CancelReason = newState.Reason;
             }
+            context.SaveChanges();
             context.Statechanges.Add(new Statechange()
             {
                 Date = DateTime.Now,

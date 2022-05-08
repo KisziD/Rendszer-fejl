@@ -49,7 +49,8 @@ namespace Backend.Controllers
         public IEnumerable<MaintenanceView> getTasks(int id)
         {
             List<MaintenanceView> tasks = new List<MaintenanceView>();
-            var query = context.Tasks.Where(t => t.SpecialistID == id).ToArray();
+            Specialist s = context.Specialists.Where(s => s.UserID == id).FirstOrDefault();
+            var query = context.Tasks.Where(t => t.SpecialistID == s.ID).ToArray();
             foreach(var item in query)
             {
 

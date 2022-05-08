@@ -52,9 +52,9 @@ namespace Backend.Controllers
         }
 
         [HttpPost("add")]
-        public string post([FromBody] Models.Task tasks)
+        public string post([FromBody] Models.Task task)
         {
-            context.Tasks.Add(tasks);
+            context.Tasks.Add(task);
             context.SaveChanges();
             return "{\"response\":0}";
         }
